@@ -1,5 +1,5 @@
 function [AUROC_score_orig,AUROC_score_area, TPR_array_area, FPR_array_area,TPR_array_orig, FPR_array_orig]=...
-    TIGRESSRankMatrices(A_app_ind, A, L_thr,R)
+    TIGRESSRankMatrices(A_app_ind, A, L,R)
 % TIGRESSRankMatrices computes the AUROC of the list of R infered matrices, A_app_ind (G*G*R)
 % compared the A matrix (G*G) with a threshold L_thr. This threshold is
 % used instead of L in the canonical TIGRESS. TIGRESSRankMatrices outputs
@@ -7,8 +7,8 @@ function [AUROC_score_orig,AUROC_score_area, TPR_array_area, FPR_array_area,TPR_
 % the ROC for the two methods of TIGRESS (original and area).
 
 % Compute the TIGRESS socres
-Score_mat_area=sum(A_app_ind.*(A_app_ind<=L_thr).*(L_thr+1-A_app_ind),4)/R/L_thr;   
-Score_mat_orig=sum(logical(A_app_ind<=L_thr),4)/R;        
+Score_mat_area=sum(A_app_ind.*(L+1-A_app_ind),4)/R/L;   
+Score_mat_orig=sum(logical(A_app_ind>0),4)/R;        
 
 % Sort the scores and store in I their ranks with respect to the whole 
 % matrix
