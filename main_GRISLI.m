@@ -36,9 +36,9 @@ X=X(I,:);%X is the spacetime matrix of the data (of size Cx(1+G)), with the
 
 Alpha=@(Kx,Dt,sigx,sigt)exp(-(Kx.^2)/(2*sigx^2)).*exp(-(Dt.^2)/(2*sigt^2)).*(Dt.^2);%The Peanian kernel we use
 
-% The other GRISLI parameters are :
-R=1000;
-L_array=20:5:90; 
+% The other GRISLI parameters are :ç_
+% R=1000;
+L_array=70;%1:15;%1:15; 20:5:90
 alpha_min=.4;
 
 numcells=size(X,1);
@@ -50,8 +50,8 @@ K = SpacetimeKernel(X,Alpha);
 Knorm = KernelNormalization(K);
 V=VelocityInference(X,Knorm);
 
-for alpha_min=0.05:0.05:1%count=1:20
-for R=1500%[10, 50,80,100, 200,500, 800,1000,1500,2000,3000, 4000,5000]
+for count=1:20 %alpha_min=0.05:0.05:0.95
+for R=[10, 50,80,100, 200,500, 800,1000,1500,2000,3000, 4000,5000]
 
     tic
 %%4-D array to store the ranks of the inferred A of the R tests for each L in L_array
@@ -88,12 +88,12 @@ fileID = fopen('RGRISLI_area_perf.txt','a');
 % fprintf(fileID,fmt,'#cells','R','L','alpha','AUROC','time');
 fmt = '%6d \t %4d \t %4d \t %1.3f \t %5.5f \t %6.2f\n';
 for i=1:length(L_array)
-fprintf(fileID,fmt, [numcells R L_array(i) alpha_min ROC_score_orig_mat(i) elapsedTime]);
+fprintf(fileID,fmt, [numcells R L_array(i) alpha_min ROC_score_area_mat(i) elapsedTime]);
 end
 fclose(fileID);
 end
 end
-%% Export
+  %% Export
 % tic
 % Score_export=[0 L_thr_array; [L_array' , ROC_score_orig_mat]];
 % datafilename=['Data2_ROC_orig_alph_' num2str(10*alpha_min) '_R_' num2str(R) '.mat'];
