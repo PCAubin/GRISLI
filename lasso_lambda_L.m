@@ -7,6 +7,11 @@ function A_app_array_ind=lasso_lambda_L(V,X,lambda_array,L_array)
 % is in L_array if the L_array parameter is provided. Otherwise it computes
 % the A_lambda for lambda in lambda_array.
 % The result is a 3D array (GxGx(size L_array || size lambda_array)).
+% Pierre-Cyril Aubin-Frankowski, 2018
+
+% IMPORTANT: this function requires the SPAMS toolbox to be installed in
+% the working directory.
+
 param.numThreads=-1;
 param.mode=2;
 param.lambda2=0;

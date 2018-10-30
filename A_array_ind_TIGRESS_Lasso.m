@@ -2,10 +2,12 @@ function A_app_rank_appearance=A_array_ind_TIGRESS_Lasso(X,V,index,Alpha,alpha_m
 % A_array_ind_TIGRESS_Lasso computes the rank matrix, A_app_ind (G*G) based on the
 % lasso-approximated A matrix, A_app (G*G). It takes as inputs the
 % spacetime matrix, X (G*(C+1)), an index list, index, which is a subset of [1:C],
-% the Peanian kernel, Alpha, the lower threshold of the randomizing factor,
-% alpha_min, the array of lambda, lambda_array,over which the lasso is
+% the kernel, Alpha, the lower threshold of the randomizing factor,
+% alpha_min, the array of lambda, lambda_array, over which the lasso is
 % performed, or the array of maximum steps L, L_array, which supersedes the
 % lambda approach.
+% Pierre-Cyril Aubin-Frankowski, 2018
+
 
 % Extract the submatrix X_red out of X
 X_red=X(index,:);

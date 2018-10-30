@@ -9,6 +9,9 @@ function [TPR, FPR]=CompROC(A_app_Rnk,A_wo_diag_red,listnnz_A)
 % and the list listnnz_A of the active transcription factors of A (the ones with at least
 % one nonzero value).
 
+% Pierre-Cyril Aubin-Frankowski, 2018
+
+
 % Compute the submatrix of A_app_Rnk based on the submatrix A_wo_diag_red
 % of A and the rules (non-diagonal, non empty row and column in A)
 A_app_wo_diag = A_app_Rnk - diag(diag(A_app_Rnk));
