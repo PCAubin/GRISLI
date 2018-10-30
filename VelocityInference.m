@@ -2,7 +2,8 @@ function [V,Vf,Vp]=VelocityInference(X,Knorm)
 % VelocityInference computes the midflux matrix (V), the influx matrix (Vp)
 % and the outflux matrix (Vf)
 % It takes as inputs the spacetime (time in first column) matrix X (Cx(1+G))
-% and the matrix of the weights summing to one in past and future Knorm (GxG)
+% and the matrix Knorm (GxG) of the weights summing to one in past and future 
+% Pierre-Cyril Aubin-Frankowski, 2018
 Dt = bsxfun(@minus,X(:,1),X(:,1)');
 invDt=Dt.^-1;
 invDt(isinf(invDt)) = 0;

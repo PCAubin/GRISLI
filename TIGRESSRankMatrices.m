@@ -1,10 +1,10 @@
 function [AUROC_score_orig,AUROC_score_area, TPR_array_area, FPR_array_area,TPR_array_orig, FPR_array_orig]=...
     TIGRESSRankMatrices(A_app_ind, A, L,R)
-% TIGRESSRankMatrices computes the AUROC of the list of R infered matrices, A_app_ind (G*G*R)
-% compared the A matrix (G*G) with a threshold L_thr. This threshold is
-% used instead of L in the canonical TIGRESS. TIGRESSRankMatrices outputs
-% the two AUROCs and the list of couples (TPR,FPR) in case one wants to plot
-% the ROC for the two methods of TIGRESS (original and area).
+% TIGRESSRankMatrices computes the AUROC of the list of the R infered matrices, A_app_ind (G*G*R)
+% compared to the reference matrix A (G*G) with respect to the TIGRESS parameter L.
+% TIGRESSRankMatrices outputs the two AUROCs and the list of couples (TPR,FPR) 
+% in case one wants to plot the ROC for the two methods of TIGRESS (original and area).
+% Pierre-Cyril Aubin-Frankowski, 2018
 
 % Compute the TIGRESS socres
 Score_mat_area=sum(A_app_ind.*(L+1-A_app_ind),4)/R/L;   

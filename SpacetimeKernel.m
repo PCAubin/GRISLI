@@ -1,9 +1,10 @@
 function [K,sigx,sigt] = SpacetimeKernel(X,Alpha,sigx,sigt)
 % SpacetimeKernel computes the weight matrix K (GxG).
 % It takes as inputs the spacetime (time in first column) matrix X
-% (Cx(1+G)), the Peanian kernel Alpha, and its parameters sigx and sigt (if
-% those are not provided they are taken as the sqaure root of the tenth
+% (Cx(1+G)), the kernel Alpha, and its parameters sigx and sigt (if
+% those are not provided they are taken as the square root of the tenth
 % percentile of the distribution of distances in space and time).
+% Pierre-Cyril Aubin-Frankowski, 2018
 Kx = squareform(pdist(X(:,2:end),'euclidean'));
 Dt = bsxfun(@minus,X(:,1),X(:,1)');
 
@@ -24,7 +25,9 @@ if nargin<2
 end
 K=Alpha(Kx,Dt,sigx,sigt);
 
-%check if every point gives a nonnull weight to at least one another point.
+% check if every point gives a nonnull weight to at least one another point.
+% If an error appears, it means that the variance parameters are too small
+% causing some points not to 'see' (i.e give positive weight) to any neighbor.
 if(sum(any(K))~=size(K,1))
     disp('Min real value of Matlab reached, change parameters');
 end

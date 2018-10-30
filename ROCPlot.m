@@ -3,6 +3,7 @@ function ROCPlot(FPR_array_multiple,TPR_array_multiple,array_labels)
 % positive rates(TPR,FPR) FPR_array_multiple (numlabels*G^2) and TPR_array_multiple
 % (numlabels*G^2) based on the array_label (1*numlabels) such as 'TIGRESS
 % orig', 'TIGRESS area' or 'SCODE'
+% Pierre-Cyril Aubin-Frankowski, 2018
 
 checksizes=(size(FPR_array_multiple,1)==size(TPR_array_multiple,1))&&(length(array_labels)==size(TPR_array_multiple,1));
 if ~checksizes

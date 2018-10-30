@@ -1,10 +1,11 @@
 function VelocityPlot(X,V,Vf,Vp,scale)
 % VelocityPlot computes (x,v) plots showing the measured points x with
-% their midflux (and influx Vf and outflux Vp) as an arrow, in
-% derivative-like way.
-%if x is of dimension one (thus getting 2-D plots)
+% their midflux (and influx Vf and outflux Vp) as an arrow.
 % It takes as inputs the spacetime (time in first column) matrix X (Cx(1+G))
 % and flux matrices V (CxG)
+% It plots the first component of the fluxes in the (t,x_1) plane (thus getting 2-D
+% plots) as well a the point cloud projected to the (t,x_1) plane.
+% Pierre-Cyril Aubin-Frankowski, 2018
 N=size(X,1);
 figure
 if nargin<5
