@@ -40,8 +40,8 @@ ROCPlot(FPR_array_area,TPR_array_area,"GRISLI"); %ROC curves
 %% TESTING SCODE
 
 D=4;
-number_tries=10;
-number_average=5;
+number_tries=100;
+number_average=50;
 number_test=1;
 saveResultsBool=false;
 saveFileName='AUROC_files/SCODE_results.txt';
