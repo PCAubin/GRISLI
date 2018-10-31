@@ -1,4 +1,4 @@
-function [AUROC_score_area]=Test_TIGRESS_realdata(A,X,L_array,L_max,R,alpha_min,saveResultsBool, saveFileName)
+function [AUROC_score_area, elapsedTime]=Test_TIGRESS_realdata(A,X,L_array,L_max,R,alpha_min,saveResultsBool, saveFileName)
 % Test_TIGRESS_realdata computes the AUROC scores of the matrices predicted
 % through area TIGRESS (Haury et al. 2012) compared to the reference matrix A (G*G). 
 % If the boolean saveResultsBool is true it can export the results in the txt file
@@ -8,7 +8,7 @@ function [AUROC_score_area]=Test_TIGRESS_realdata(A,X,L_array,L_max,R,alpha_min,
 % largest value in L_array.
 % Test_TIGRESS_realdata calls the Matlab functions provided by (Haury et al. 2012).
 % For instance TIGRESS parameters could be:
-% saveResults=false;
+% saveResultsBool=false;
 % L_max=90;
 % L_array=1:5:L_max;
 % alpha_min=.2
