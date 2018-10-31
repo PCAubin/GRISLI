@@ -27,6 +27,6 @@ cd GRISLI
 Or download from the "Download ZIP" button and unzip it.
 
 ## Running GRISLI
-See demo_GRISLI.m to reproduce our numerical experiments and compare them to TIGRESS, SCODE or your own methods. Various tables of results are provided in the AUROC_boxplots and AUROC_files. These results are used in demo_GRISLI.m to plot the various curves of the article. If only one set of GRISLI parameters is tested, computation should take between 10s to 400s depending on the chosen R (between 10 and 3000).
+See demo_GRISLI.m to reproduce our numerical experiments and compare them to TIGRESS, SCODE or your own methods. Various tables of results are provided in the AUROC_boxplots and AUROC_files. These results are used in demo_GRISLI.m to plot the various curves of the article. If only one set of GRISLI parameters is tested, computation should take between 10s to 400s depending on the chosen R (typically chosen between 10 and 3000).
 
 Pierre-Cyril Aubin-Frankowski, 31/10/2018
