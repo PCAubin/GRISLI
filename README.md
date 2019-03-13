@@ -7,7 +7,9 @@ Single-cell RNA sequencing (scRNA-seq) offers new possibilities to infer gene re
 ## Reference
 
 Biorxiv link: https://www.biorxiv.org/content/10.1101/464479v1
+
 doi: https://doi.org/10.1101/464479
+
 Submitted in November 2018
 
 ## Requirements
