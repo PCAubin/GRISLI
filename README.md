@@ -31,6 +31,8 @@ cd GRISLI
 Or download from the "Download ZIP" button and unzip it.
 
 ## Running GRISLI
-See demo_GRISLI.m to reproduce our numerical experiments and compare them to TIGRESS, SCODE or your own methods. Various tables of results are provided in the AUROC_boxplots and AUROC_files. These results are used in demo_GRISLI.m to plot the various curves of the article. If only one set of GRISLI parameters is tested, computation should take between 10s to 400s depending on the chosen R (typically chosen between 10 and 3000).
+See demo_GRISLI_paper_results.m to reproduce our numerical experiments and compare them to TIGRESS, SCODE or your own methods. Various tables of results are provided in the AUROC_boxplots and AUROC_files. These results are used in demo_GRISLI_paper_results.m to plot the various curves of the article. If only one set of GRISLI parameters is tested, computation should take between 10s to 400s depending on the chosen R (typically chosen between 10 and 3000).
+
+If you wish to use GRISLI on your own dataset in a _de novo_ fashion, have a try at demo_GRISLI_denovo_analysis.m The result (Rnk_array_TIGRESS_area_L) is a list of matrices containing the edges ranked by their importance (from 1 (the first predicted) to GxG (the last predicted)). These ranks are used in demo_GRISLI_paper_results.m to compute ROC_scores if you have a reference matrix **A** under hand. 
 
 Pierre-Cyril Aubin-Frankowski, 31/10/2018
