@@ -9,6 +9,8 @@ Original file is located at
 
 !pip install -U scvelo
 
+"""# Nouvelle section"""
+
 ## Prepare the pancreatic endocrinogenesis data
 
 import scvelo as scv
@@ -73,6 +75,9 @@ drive.mount('/content/gdrive', force_remount=True)
 
 # Save adjacency matrix of the regulatory network restricted to the selected TF
 np.savetxt('/content/gdrive/My Drive/A.txt', A, fmt='%d')
+
+# Save the list of selected TFs of the regulatory network
+np.savetxt('/content/gdrive/My Drive/tf.txt', tfselect, fmt='%s')
 
 # Extract and save expression matrix
 exp = adata.layers['spliced']
