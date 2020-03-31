@@ -1,4 +1,4 @@
-function [TPR, FPR]=CompROC(A_app_Rnk,A_wo_diag_red,listnnz_A)
+function [TPR, FPR, PPV]=CompROC(A_app_Rnk,A_wo_diag_red,listnnz_A)
 % CompROC computes the true positive ratio (TPR) and false positive ratio 
 % (FPR) of A_app_Rnk (G*G) with respect to A_wo_diag_red which is 
 % the submatrix of the binary matrix A (G*G) where only
@@ -31,5 +31,9 @@ TPR=TP/P;
 if P==0
     TPR=0;
 end
-
+FP=N-TN;
+PPV=TP/(TP+FP);
+if TP+FP==0
+    PPV=1;
+end
 end

@@ -1,4 +1,5 @@
-function [AUROC_scode, elapsedTime]=Test_SCODE_realdata(filenumber,A,D,X,...
+function [AUROC_scode, AUPR_scode, elapsedTime,...
+    TPR_array_SCODE, FPR_array_SCODE, PPV_array_SCODE,I_scode]=Test_SCODE_realdata(filenumber,A,D,X,...
     number_tries,number_average,saveResultsBool,saveFileName)
 % Test_SCODE_realdata computes the AUROC scores of the matrices predicted
 % through the SCODE Algorithm (Matsumoto et al., 2017) as compared to the 
@@ -34,7 +35,7 @@ command = ['Rscript SCODE.R data' num2str(filenumber) '/datamatrix.txt data'...
 system(command);
 cd ..
 numcells=size(X,1);
-A_SCODE = dlmread('SCODE-master/A.txt','\t');
+A_SCODE = dlmread('SCODE-master/A_SCODE.txt','\t');
 elapsedTime = toc;
 
 listnnz_A=1:size(A,1);
@@ -47,18 +48,20 @@ A_wo_diag_red=A_wo_diag(listnnz_A,listnnz_A);
 [~,I_scode]=sort(I_scode);
 I_scode=reshape(I_scode,size(A_SCODE));
 
-Rnk_array_SCODE=zeros(size(A_SCODE,1),size(A_SCODE,2),numel(A));
+% Rnk_array_SCODE=zeros(size(A_SCODE,1),size(A_SCODE,2),numel(A));
 TPR_array_SCODE=zeros(1,length(numel(A)+1));
 FPR_array_SCODE=zeros(1,length(numel(A)+1));
+PPV_array_SCODE=zeros(1,length(numel(A)+1));
 for k=1:(numel(A)+1)
    A_app_Rnk=(I_scode<k);
-   Rnk_array_SCODE(:,:,k)=A_app_Rnk;
-   [TPR_array_SCODE(k), FPR_array_SCODE(k)]=CompROC(A_app_Rnk,A_wo_diag_red,listnnz_A);   
+%    Rnk_array_SCODE(:,:,k)=A_app_Rnk;
+   [TPR_array_SCODE(k), FPR_array_SCODE(k), PPV_array_SCODE(k)]=CompROC(A_app_Rnk,A_wo_diag_red,listnnz_A);   
 end
 % [M,I] = max(abs(A_SCODE(:)));
 % [I_row, I_col] = ind2sub(size(A_SCODE),I);
 
 AUROC_scode=trapz(FPR_array_SCODE(1:end),TPR_array_SCODE(1:end));
+AUPR_scode=trapz(TPR_array_SCODE(1:end),PPV_array_SCODE(1:end));
 
 if saveResultsBool
     fileID = fopen(saveFileName,'a');

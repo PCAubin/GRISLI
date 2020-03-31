@@ -38,9 +38,9 @@ else
         [~, path]=mexLasso(V(:,j),X(:,2:end),param);
         A_app_ind(:,j)=sum(logical(path),2).*logical(path(:,end));
         end
-     if ~all(sum(logical(A_app_ind)) == L_array(i))
-         disp("Lasso troubleshooting required")
-     end
+%      if ~all(sum(logical(A_app_ind)) == L_array(i))
+%          disp("Lasso troubleshooting required")
+%      end
     A_app_array_ind(:,:,i) = A_app_ind';
     end   
 end

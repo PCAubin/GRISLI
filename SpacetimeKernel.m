@@ -3,21 +3,21 @@ function [K,sigx,sigt] = SpacetimeKernel(X,Alpha,sigx,sigt)
 % It takes as inputs the spacetime (time in first column) matrix X
 % (Cx(1+G)), the kernel Alpha, and its parameters sigx and sigt (if
 % those are not provided they are taken as the square root of the tenth
-% percentile of the distribution of distances in space and time).
+% percentile of the distribution of squared distances in space and time).
 % Pierre-Cyril Aubin-Frankowski, 2018
 Kx = squareform(pdist(X(:,2:end),'euclidean'));
 Dt = bsxfun(@minus,X(:,1),X(:,1)');
-
+Prct=10;
 if nargin<4
-    sigt=sqrt(prctile(reshape(Dt.^2,1,[]), 10));
+    sigt=sqrt(prctile(reshape(Dt.^2,1,[]), Prct));
     if sigt==0
-        sigt=mean2(Dt.^2);
+        sigt=sqrt(mean2(Dt.^2));
     end
 end
 if nargin<3
-    sigx=sqrt(prctile(reshape(Kx,1,[]), 10));
+    sigx=sqrt(prctile(reshape(Kx,1,[]), Prct));
     if sigx==0
-        sigx=mean2(Kx);
+        sigx=sqrt(mean2(Kx));
     end
 end
 if nargin<2

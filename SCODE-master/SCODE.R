@@ -107,7 +107,7 @@ A <- W %*% B %*% invW
 meanA <- meanA +A
 }
 meanA<-meanA/repnum
-write.table(meanA,"A.txt", row.names=F, col.names=F, sep="\t")
+write.table(meanA,"A_SCODE.txt", row.names=F, col.names=F, sep="\t")
 # prmatrix(meanA, rowlab=rep("",dim(meanA)[1]), collab=rep("",dim(meanA)[2]))
 # dim(meanA)
 #output A and B

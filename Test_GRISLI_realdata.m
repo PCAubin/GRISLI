@@ -1,5 +1,5 @@
-function [AUROC_GRISLI, elapsedTime, TPR_array_area, FPR_array_area]=Test_GRISLI_realdata(A,X,L_array,Alpha,...
-    R,alpha_min,saveResultsBool, saveFileName)
+function [AUROC_GRISLI, AUPR_GRISLI, elapsedTime, TPR_array_area, FPR_array_area,...
+    PPV_array_area, A_app_array_Rnk0]=Test_GRISLI_realdata(A,X,L_array,Alpha,R,alpha_min,saveResultsBool, saveFileName,bool_orig,V,nbtry)
 % Test_GRISLI_realdata computes the AUROC scores of the matrices predicted
 % through the GRISLI Algorithm (Aubin-Frankowski and Vert, 2018) as compared to the 
 % reference matrix A (G*G) for the given dataset found at data*filenumber*/.
@@ -12,7 +12,19 @@ function [AUROC_GRISLI, elapsedTime, TPR_array_area, FPR_array_area]=Test_GRISLI
 % alpha_min=.3;
 % saveResultsBool=false;
 % Pierre-Cyril Aubin-Frankowski, 2018
-
+if nargin<11
+    nbtry=1;
+end
+if nargin<10
+    K = SpacetimeKernel(X,Alpha);
+    Knorm = KernelNormalization(K);
+    V=VelocityInference(X,Knorm);
+%     V0=V;
+%     save('V_new_G_mat.mat','V0')
+end
+if nargin<9
+    bool_orig=false;
+end
 if nargin<8
     saveFileName='GRISLI_results.txt';
 end
@@ -24,10 +36,8 @@ end
 numcells=size(X,1);
 lambda_array=[0.0001];%In case we wish to use an array of lambda values over which we compute the lasso, rather than using L
 
-K = SpacetimeKernel(X,Alpha);
-Knorm = KernelNormalization(K);
-V=VelocityInference(X,Knorm);
 
+for count=1:nbtry
 tic
 %%4-D array to store the ranks of the inferred A of the R tests for each L in L_array
 A_app_array_ind=uint32(zeros(size(A,1),size(A,2),length(L_array),R));
@@ -42,12 +52,12 @@ end
 elapsedTime = toc;
 
 %%Compute scores
-[ROC_score_orig_mat,ROC_score_area_mat, TPR_array_area, FPR_array_area,TPR_array_orig, FPR_array_orig]=...
-    ScoreMat_TIGRESS(A_app_array_ind, A,L_array,R);%
+[ROC_score_area_mat, PR_score_area_mat, TPR_array_area, FPR_array_area,...
+    PPV_array_area, A_app_array_Rnk0]=ScoreMat_TIGRESS(A_app_array_ind, A,L_array,R,bool_orig);
 
 % Max_orig=max(max(ROC_score_orig_mat));
-Max_area=max(max(ROC_score_area_mat));
-AUROC_GRISLI=Max_area;
+AUROC_GRISLI=max(max(ROC_score_area_mat));
+AUPR_GRISLI=max(max(PR_score_area_mat));
 %%Export
 if saveResultsBool
 %     fileID = fopen(saveFileName,'a');
@@ -66,5 +76,6 @@ if saveResultsBool
     fprintf(fileID,fmt, [numcells R L_array(i) alpha_min ROC_score_area_mat(i) elapsedTime]);
     end
     fclose(fileID);
+end
 end
 end

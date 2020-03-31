@@ -1,4 +1,5 @@
-function [AUROC_score_area, elapsedTime]=Test_TIGRESS_realdata(A,X,L_array,L_max,R,alpha_min,saveResultsBool, saveFileName)
+function [AUROC_score_area,AUPR_score_area, elapsedTime,TPR_array_area,...
+    FPR_array_area, PPV_array_area]=Test_TIGRESS_realdata(A,X,L_array,L_max,R,alpha_min,saveResultsBool, saveFileName)
 % Test_TIGRESS_realdata computes the AUROC scores of the matrices predicted
 % through area TIGRESS (Haury et al. 2012) compared to the reference matrix A (G*G). 
 % If the boolean saveResultsBool is true it can export the results in the txt file
@@ -23,9 +24,8 @@ if nargin<7
     saveResultsBool=false;
 end
 
-
 data.expdata=X(:,2:end);
-genenames = strsplit(int2str(1:100));
+genenames = strsplit(int2str(1:size(A,1)));
 data.genenames=genenames';
 
 tic
@@ -57,6 +57,7 @@ Rnk_array_TIGRESS_area=zeros(size(A_app_ind,1),size(A_app_ind,2),numel(A));
 
 TPR_array_area=zeros(1,length(numel(A)+1));
 FPR_array_area=zeros(1,length(numel(A)+1));
+PPV_array_area=zeros(1,length(numel(A)+1));
 
 listnnz_A=1:size(A,1);
 A_wo_diag = A - diag(diag(A));
@@ -69,7 +70,7 @@ A_wo_diag_red=A_wo_diag(listnnz_A,listnnz_A);
 for k=1:(numel(A)+1)
    A_app_Rnk=(I_area<k);
    Rnk_array_TIGRESS_area(:,:,k)=A_app_Rnk;
-   [TPR_array_area(k), FPR_array_area(k)]=CompROC(A_app_Rnk,A_wo_diag_red,listnnz_A);   
+   [TPR_array_area(k), FPR_array_area(k), PPV_array_area(k)]=CompROC(A_app_Rnk,A_wo_diag_red,listnnz_A);   
  
 %    A_app_Rnk=(I_orig<k);
 %    Rnk_array_TIGRESS_orig(:,:,k)=A_app_Rnk;
@@ -78,6 +79,7 @@ end
 
 % AUROC_score_orig=trapz(FPR_array_orig(1:end),TPR_array_orig(1:end));
 AUROC_score_area=trapz(FPR_array_area(1:end),TPR_array_area(1:end));
+AUPR_score_area=trapz(TPR_array_area(1:end),PPV_array_area(1:end));
 elapsedTime = toc;
 % ROCPlot([FPR_array_area;FPR_array_orig],[TPR_array_area;TPR_array_orig],["TIGRESS area","TIGRESS orig"]);
 if saveResultsBool
